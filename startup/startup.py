@@ -1,0 +1,211 @@
+import sys
+import os
+import logging
+import subprocess
+import getpass
+import string
+import random
+
+
+class GrowAutomationsStartUp(object):
+    def __init__(self):
+        self.api_env_path = "../.env"
+        self.mosquitto_configs_path = "../mosquitto/config"
+        self.access_controll_list_path = "../mosquitto/config/access_control_list.acl"
+        self.mosquitto_configs_path = "../mosquitto/config/mosquitto.conf"
+        self.sysLogger = self.__reg_logger()
+        self.uiLogger = self.__reg_logger(type=1)
+
+    def __reg_logger(self, type=0):
+        if type == 1:
+            # create logger
+            logger = logging.getLogger("ui")
+            logger.setLevel(logging.DEBUG)
+
+            # create console handler and set level to debug
+            ch = logging.StreamHandler()
+            ch.setLevel(logging.DEBUG)
+            # print(type)
+
+            formatter = logging.Formatter('%(message)s')
+            ch.setFormatter(formatter)
+            logger.addHandler(ch)
+            return logger
+        else:
+            # create logger
+            logger = logging.getLogger("SYS")
+            logger.setLevel(logging.DEBUG)
+
+            # create console handler and set level to debug
+            ch = logging.StreamHandler()
+            ch.setLevel(logging.DEBUG)
+
+            os.makedirs(os.path.dirname("./logs/startup.log"), exist_ok=True)
+            log_reg = logging.FileHandler('./logs/startup.log', mode="w", encoding=None, delay=False)
+            log_reg.setLevel(logging.DEBUG)
+
+            # create formatter for logger output
+            formatter = logging.Formatter('\n[+] - [%(levelname)s] - [%(asctime)s] - [%(name)s] - [%(message)s]')
+
+            # add formatter to handlers
+            ch.setFormatter(formatter)
+            log_reg.setFormatter(formatter)
+
+            # add handlers to logger
+            logger.addHandler(ch)
+            logger.addHandler(log_reg)
+            return logger
+
+    def random_str_generator(self, size=8, chars=string.ascii_uppercase + string.ascii_lowercase
+                                                                        + string.digits + "!#$%&()*/=?@[]^_{}~"):
+        return ''.join(random.choice(chars) for _ in range(size))
+
+    def port_approver(self, port, used_ports):
+        while port in used_ports or not port.isdecimal():
+            self.uiLogger.info("[!] Bad port input or already in use!")
+            self.uiLogger.info("[!] Ports already in use!--> %s\n" % used_ports)
+            port = input("[~] Select another port: ")
+        else:
+            used_ports.append(port)
+            return port
+
+    def pwd_approver(self, info):
+        while True:
+            pass_var = getpass.getpass(info)
+            if len(pass_var) < 8:
+                self.uiLogger.info("[!] Password too short!\n")
+            elif pass_var == getpass.getpass("[~] Re-type PASSWORD: "):
+                return pass_var
+            else:
+                self.uiLogger.info("[!] Password does not match. Try again!\n")
+
+    def usr_approver(self, usr, used_usrs):
+        while usr in used_usrs or len(usr) == 0:
+            self.uiLogger.info("[!] Bad username input or already in use!")
+            self.uiLogger.info("[!] Usernames already in use!--> %s\n" % used_usrs)
+            usr = input("[~] Select another username: ")
+        else:
+            used_usrs.append(usr)
+            return usr
+
+    def fill_env_files(self, opt):
+        try:
+            from jinja2 import Environment, FileSystemLoader
+        except Exception:
+            subprocess.call([sys.executable, "-m", "pip", "install", "Jinja2==2.10.3", "--user"])
+        finally:
+            from jinja2 import Environment, FileSystemLoader
+
+        if opt == "0":
+            POSTGRES_DB = "pgrsDB"
+            POSTGRES_USER = "pgrsUSER"
+            POSTGRES_PASSWORD = self.random_str_generator()
+            POSTGRES_PORT = 5432
+            TOKEN = self.random_str_generator(40, string.ascii_uppercase + string.ascii_lowercase
+                                                                         + string.digits + ".-_")
+            API_PORT = 5000
+            BROKER_PORT = 1883
+            CONTROLLER_MQTT_USER = "miagiContr"
+            CONTROLLER_MQTT_PASSWORD = self.random_str_generator()
+            COM_MQTT_USER = "miagiCom"
+            COM_MQTT_PASSWORD = self.random_str_generator()
+            UI_MQTT_USER = "miagiUI"
+            UI_MQTT_PASSWORD = self.random_str_generator()
+
+            self.uiLogger.info("[!] Variable ypu may need in configurating systems!")
+
+            self.uiLogger.info("  POSTGRES_DB: %s" % POSTGRES_DB)
+            self.uiLogger.info("  POSTGRES_USER: %s" % POSTGRES_USER)
+            self.uiLogger.info("  POSTGRES_PORT: %s" % POSTGRES_PORT)
+            self.uiLogger.info("  TOKEN: %s" % TOKEN)
+            self.uiLogger.info("  BROKER_PORT: %s\n" % BROKER_PORT)
+
+        else:
+            used_ports = ["80"]
+            used_usrs = []
+
+            POSTGRES_DB = input("[~] Data base name: ")
+            POSTGRES_USER = input("[~] Data base user: ")
+            POSTGRES_PASSWORD = self.pwd_approver("[~] Data base password: ")
+            POSTGRES_PORT = self.port_approver(input("[~] Data base port: "), used_ports)
+            TOKEN = input("[~] API token: ")
+            API_PORT = self.port_approver(input("[~] Api port: "), used_ports)
+            BROKER_PORT = self.port_approver(input("[~] Broker port: "), used_ports)
+            CONTROLLER_MQTT_USER = self.usr_approver(input("[~] CONTROLLER MQTT USER: "), used_usrs)
+            CONTROLLER_MQTT_PASSWORD = self.pwd_approver("[~] PASSWORD: ")
+            COM_MQTT_USER = self.usr_approver(input("[~] COM MQTT USER: "), used_usrs)
+            COM_MQTT_PASSWORD = self.pwd_approver("[~] PASSWORD: ")
+            UI_MQTT_USER = self.usr_approver(input("[~] UI MQTT USER: "), used_usrs)
+            UI_MQTT_PASSWORD = self.pwd_approver("[~] PASSWORD: ")
+
+        file_loader = FileSystemLoader('templates')
+        env = Environment(loader=file_loader)
+
+        env_api_tmp = env.get_template('env_api_tmp.txt')
+        env_api_content = env_api_tmp.render(API_PORT=API_PORT,
+                                             BROKER_PORT=BROKER_PORT,
+                                             POSTGRES_DB=POSTGRES_DB,
+                                             POSTGRES_USER=POSTGRES_USER,
+                                             POSTGRES_PASSWORD=POSTGRES_PASSWORD,
+                                             POSTGRES_PORT=POSTGRES_PORT,
+                                             TOKEN=TOKEN,
+                                             CONTROLLER_MQTT_USER=CONTROLLER_MQTT_USER,
+                                             CONTROLLER_MQTT_PASSWORD=CONTROLLER_MQTT_PASSWORD,
+                                             COM_MQTT_USER=COM_MQTT_USER,
+                                             COM_MQTT_PASSWORD=COM_MQTT_PASSWORD,
+                                             UI_MQTT_USER=UI_MQTT_USER,
+                                             UI_MQTT_PASSWORD=UI_MQTT_PASSWORD,)
+
+        if not os.path.exists(self.mosquitto_configs_path):
+            os.makedirs(self.mosquitto_configs_path)
+
+        with open(self.api_env_path, "+w") as f:
+            f.write(env_api_content)
+            self.sysLogger.info(" API environment created --> %s " % self.api_env_path)
+
+        access_control_list_tmp = env.get_template('access_control_list_tmp.txt')
+        access_control_list_content = access_control_list_tmp.render(CONTROLLER_MQTT_USER=CONTROLLER_MQTT_USER,
+                                                                     COM_MQTT_USER=COM_MQTT_USER,
+                                                                     UI_MQTT_USER=UI_MQTT_USER,)
+
+        with open(self.access_controll_list_path, "w+") as f:
+            f.write(access_control_list_content)
+            self.sysLogger.info(" Access controll list created --> %s " % self.access_controll_list_path)
+
+        mosquitto_conf_tmp = env.get_template('mosquitto_conf_tmp.txt')
+        mosquitto_conf_content = mosquitto_conf_tmp.render(BROKER_PORT=BROKER_PORT)
+
+        with open(self.mosquitto_configs_path, "w+") as f:
+            f.write(mosquitto_conf_content)
+            self.sysLogger.info(" Mosquitto config file created --> %s " % self.mosquitto_configs_path)
+
+    def start(self):
+        self.uiLogger.info("\n\n")
+        self.uiLogger.info(r"""
+                                       __ __________                        _______________________   ____
+          ________ __   ____   _______/  |\______   \ ____   ____   _____  /   _____/\______   \   \ /   /
+         / ____/  |  \_/ __ \ /  ___/\   __\       _//  _ \ /  _ \ /     \ \_____  \  |       _/\   Y   /
+        < <_|  |  |  /\  ___/ \___ \  |  | |    |   (  <_> |  <_> )  Y Y  \/        \ |    |   \ \     /
+         \__   |____/  \___  >____  > |__| |____|_  /\____/ \____/|__|_|  /_______  / |____|_  /  \___/
+            |__|           \/     \/              \/                    \/        \/         \/
+        """)
+
+        self.uiLogger.info("\n\n\n\n")
+        self.uiLogger.info("[*] Please select option for configuration files creation:\n")
+
+        self.uiLogger.info("    [0][*] Auto (recommended)\n"
+                           "    [1][*] Manual\n"
+                           "    [2][*] Reject\n")
+
+        opt = input("[~] Choose option(0, 1, 2): ")
+        self.uiLogger.info("\n")
+        if opt in ["0", "1", "2"]:
+            if opt == "0" or "1":
+                self.fill_env_files(opt)
+            elif opt == "2":
+                self.uiLogger.info("Process is rejected")
+        else:
+            self.uiLogger.info("[!] Bad option number choosen")
+
+
+GrowAutomationsStartUp().start()

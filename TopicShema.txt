@@ -1,0 +1,26 @@
+'+' - will be replaced with controller ID(MAC) in practice
+'#' - mean that the subscriber of the topic will subscribe any variety of  the topic extensions
+
+
+ctrl_cli - MAC:
+  /  action    /  topic  /                             /
+  ----------------------------------------------------
+  -->  pub     --> quest/auth
+  -->  sub     --> quest/+/authCheck
+  -->  pub/sub --> quest/+/modeIn
+  -->  pub/sub --> quest/+/modeOut
+  -->  pub     --> quest/+/healthCheck
+
+mqtt_master_cli - MAC:
+  /  action    /  topic  /                             /
+  ----------------------------------------------------
+  --> sub      --> quest/auth
+  --> pub      --> quest/authCheck
+
+ui_cli - MAC:
+  /  action    /  topic  /                             /
+  ----------------------------------------------------
+  -->  sub     --> quest/auth
+  -->  pub     --> quest/+/modeIn/#
+  -->  sub     --> quest/+/modeOut/#
+  -->  sub     --> quest/+/healthCheck

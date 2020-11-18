@@ -1,0 +1,14 @@
+user {{ CONTROLLER_MQTT_USER }}
+topic readwrite quest/+/modeIn/#
+topic readwrite quest/+/modeOut/#
+topic write quest/auth
+topic read quest/+/authCheck
+
+user {{ COM_MQTT_USER }}
+topic read quest/auth
+topic write quest/+/authCheck
+
+user {{ UI_MQTT_USER }}
+topic write quest/+/modeIn/#
+topic read quest/+/modeOut/#
+topic read quest/auth
