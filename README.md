@@ -4,8 +4,8 @@
   </a>
 </div>
 <div align="center">
-  <h1>Agrobot Api</h1>
-  <p>Server side implementation for automation agricultor processes </p>
+  <h1>Quest Room SRV</h1>
+  <p>Server side implementation for processes in quest room</p>
 
 </div>
 

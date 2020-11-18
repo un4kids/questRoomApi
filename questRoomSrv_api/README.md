@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Api</h1>
-  <p>Flask restful api implementation for agrobot</p>
+  <p>Flask restful api implementation for quest_room_srv_api</p>
 
 </div>
 
