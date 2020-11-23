@@ -20,16 +20,11 @@ q_parser.add_argument("mac_addr",
                       required=False,
                       location="json",
                       type=str)
-q_parser.add_argument("index",
+q_parser.add_argument("quest_index",
                       required=True,
                       location="json",
                       type=int,
                       help="index address field cannot be blank")
-q_parser.add_argument("config",
-                      required=True,
-                      location="json",
-                      type=dict,
-                      help="config field cannot be blank")
 
 
 class Quests(Resource):
@@ -46,12 +41,12 @@ class Quests(Resource):
                 "message": "mac_addr is required!"
             }, 400
         quest_by_mac = Quest.query.filter_by(mac_addr=args["mac_addr"]).first()
-        quest_by_index = Quest.query.filter_by(index=args["index"]).first()
+        quest_by_index = Quest.query.filter_by(quest_index=args["quest_index"]).first()
 
         if quest_by_index is not None:
             return {
-                "message": "index already in use!"
-            }, 400
+                "message": "quest_index already in use!"
+            }, 409
 
         if quest_by_mac is not None:
             return {
@@ -61,8 +56,7 @@ class Quests(Resource):
         new_quest = Quest(
             title=args["title"],
             mac_addr=args["mac_addr"],
-            index=args["index"],
-            config=args["config"]
+            quest_index=args["quest_index"],
         )
         db.session.add(new_quest)
         db.session.commit()
@@ -89,7 +83,7 @@ class CQuest(Resource):
     def put(self, id):
         args = q_parser.parse_args()
         quest_to_update = Quest.query.filter_by(id=id).first()
-        obj_by_index = Quest.query.filter_by(index=args["index"]).first()
+        obj_by_index = Quest.query.filter_by(quest_index=args["quest_index"]).first()
         if obj_by_index is not None:
             if obj_by_index.id != id:
                 return {
@@ -98,8 +92,7 @@ class CQuest(Resource):
 
         if is_there_an_object(quest_to_update):
             quest_to_update.title = args["title"]
-            quest_to_update.index = args["index"]
-            quest_to_update.config = args["config"]
+            quest_to_update.quest_index = args["quest_index"]
 
             db.session.commit()
             new_data = quest_to_update.toDict()

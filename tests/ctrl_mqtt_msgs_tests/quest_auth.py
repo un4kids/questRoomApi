@@ -63,7 +63,6 @@ class MqttClientPub(object):
 # required paho-mqtt==1.5.0 instaled
 data = {"mac_addr": "MAC7ELEVEN11",
         "title": "q1",
-        "index": 6,
-        "config": {"asd": "asd"}}
+        "quest_index": 7}
 MqttClientPub(topic="quest/auth",
               broker_url="localhost", broker_port=1883, data=json.dumps(data)).bootstrap_mqtt().start()

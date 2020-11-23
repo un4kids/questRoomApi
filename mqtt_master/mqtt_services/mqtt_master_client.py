@@ -47,13 +47,11 @@ class MqttMasterClient(object):
         quest_data = json.loads(msg.payload.decode())
         title = quest_data["title"]
         mac = quest_data["mac_addr"]
-        index = quest_data["index"]
-        conf = quest_data["config"]
+        quest_index = quest_data["quest_index"]
 
         post_data = {"title": title,
                      "mac_addr": mac,
-                     "index": index,
-                     "config": conf}
+                     "quest_index": quest_index}
 
         new_quest = api_req(data=post_data).post_quest()
         self._mqttPubMsg(self.mqttc,

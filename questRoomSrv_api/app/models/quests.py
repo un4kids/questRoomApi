@@ -10,8 +10,7 @@ class Quest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     mac_addr = db.Column(db.Text(), unique=True)
-    index = db.Column(db.Integer, unique=True)
-    config = db.Column(db.JSON)
+    quest_index = db.Column(db.Integer, unique=True)
 
     created_on = db.Column(db.DateTime, default=func.now())
     updated_on = db.Column(db.DateTime, onupdate=datetime.datetime.now)

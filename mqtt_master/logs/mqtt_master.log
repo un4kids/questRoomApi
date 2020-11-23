@@ -1,84 +1,188 @@
 
-[INFO] - 2020-11-18 12:24:24,838 - master_log - 
+[INFO] - 2020-11-23 11:04:07,797 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending CONNECT (u1, p1, wr0, wq0, wf0, c1, k60) client_id=b'mqtt_master_cli']
 
 
-[INFO] - 2020-11-18 12:24:24,839 - master_log - 
+[INFO] - 2020-11-23 11:04:07,797 - master_log - 
 [*] [Query listeners are Up!]
 
 
-[INFO] - 2020-11-18 12:24:24,839 - master_log - 
+[INFO] - 2020-11-23 11:04:07,798 - master_log - 
 [*] [mqtt_master_cli] [16] [Received CONNACK (0, 0)]
 
 
-[INFO] - 2020-11-18 12:24:24,839 - master_log - 
+[INFO] - 2020-11-23 11:04:07,798 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending SUBSCRIBE (d0, m1) [(b'quest/auth', 0)]]
 
 
-[INFO] - 2020-11-18 12:24:24,839 - master_log - 
+[INFO] - 2020-11-23 11:04:07,798 - master_log - 
 [*] [mqtt_master_cli] [16] [Received SUBACK]
 
 
-[INFO] - 2020-11-18 12:25:24,905 - master_log - 
+[INFO] - 2020-11-23 11:04:24,727 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PUBLISH (d0, q0, r0, m0), 'quest/auth', ...  (61 bytes)]
+
+
+[INFO] - 2020-11-23 11:04:26,787 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PUBLISH (d0, q1, r0, m2), 'b'quest/MAC7ELEVEN11/authCheck'', ... (15 bytes)]
+
+
+[INFO] - 2020-11-23 11:04:26,788 - master_log - 
+[*] [API] [POST] [http://questroomsrv_api:80/api/quests/] [201]
+
+
+[INFO] - 2020-11-23 11:04:26,789 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PUBACK (Mid: 2)]
+
+
+[INFO] - 2020-11-23 11:04:40,136 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PUBLISH (d0, q0, r0, m0), 'quest/auth', ...  (61 bytes)]
+
+
+[INFO] - 2020-11-23 11:04:42,151 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PUBLISH (d0, q1, r0, m3), 'b'quest/MAC7ELEVEN11/authCheck'', ... (15 bytes)]
+
+
+[INFO] - 2020-11-23 11:04:42,152 - master_log - 
+[*] [API] [POST] [http://questroomsrv_api:80/api/quests/] [400]
+
+
+[INFO] - 2020-11-23 11:04:42,153 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PUBACK (Mid: 3)]
+
+
+[INFO] - 2020-11-23 11:05:32,867 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PUBLISH (d0, q0, r0, m0), 'quest/auth', ...  (61 bytes)]
+
+
+[INFO] - 2020-11-23 11:05:34,879 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PUBLISH (d0, q1, r0, m4), 'b'quest/MAC7ELEVEN11/authCheck'', ... (15 bytes)]
+
+
+[INFO] - 2020-11-23 11:05:34,879 - master_log - 
+[*] [API] [POST] [http://questroomsrv_api:80/api/quests/] [409]
+
+
+[INFO] - 2020-11-23 11:05:34,880 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PUBACK (Mid: 4)]
+
+
+[INFO] - 2020-11-23 11:06:34,948 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending PINGREQ]
 
 
-[INFO] - 2020-11-18 12:25:24,906 - master_log - 
+[INFO] - 2020-11-23 11:06:34,949 - master_log - 
 [*] [mqtt_master_cli] [16] [Received PINGRESP]
 
 
-[INFO] - 2020-11-18 12:26:24,969 - master_log - 
+[INFO] - 2020-11-23 11:07:35,015 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending PINGREQ]
 
 
-[INFO] - 2020-11-18 12:26:24,969 - master_log - 
+[INFO] - 2020-11-23 11:07:35,016 - master_log - 
 [*] [mqtt_master_cli] [16] [Received PINGRESP]
 
 
-[INFO] - 2020-11-18 12:27:25,034 - master_log - 
+[INFO] - 2020-11-23 11:08:35,078 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending PINGREQ]
 
 
-[INFO] - 2020-11-18 12:27:25,035 - master_log - 
+[INFO] - 2020-11-23 11:08:35,078 - master_log - 
 [*] [mqtt_master_cli] [16] [Received PINGRESP]
 
 
-[INFO] - 2020-11-18 12:28:25,101 - master_log - 
+[INFO] - 2020-11-23 11:09:35,142 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending PINGREQ]
 
 
-[INFO] - 2020-11-18 12:28:25,102 - master_log - 
+[INFO] - 2020-11-23 11:09:35,143 - master_log - 
 [*] [mqtt_master_cli] [16] [Received PINGRESP]
 
 
-[INFO] - 2020-11-18 12:29:25,171 - master_log - 
+[INFO] - 2020-11-23 11:10:35,212 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending PINGREQ]
 
 
-[INFO] - 2020-11-18 12:29:25,171 - master_log - 
+[INFO] - 2020-11-23 11:10:35,213 - master_log - 
 [*] [mqtt_master_cli] [16] [Received PINGRESP]
 
 
-[INFO] - 2020-11-18 12:30:25,237 - master_log - 
+[INFO] - 2020-11-23 11:11:35,282 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending PINGREQ]
 
 
-[INFO] - 2020-11-18 12:30:25,238 - master_log - 
+[INFO] - 2020-11-23 11:11:35,282 - master_log - 
 [*] [mqtt_master_cli] [16] [Received PINGRESP]
 
 
-[INFO] - 2020-11-18 12:31:25,303 - master_log - 
+[INFO] - 2020-11-23 11:12:35,348 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending PINGREQ]
 
 
-[INFO] - 2020-11-18 12:31:25,304 - master_log - 
+[INFO] - 2020-11-23 11:12:35,349 - master_log - 
 [*] [mqtt_master_cli] [16] [Received PINGRESP]
 
 
-[INFO] - 2020-11-18 12:32:25,369 - master_log - 
+[INFO] - 2020-11-23 11:13:35,418 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending PINGREQ]
 
 
-[INFO] - 2020-11-18 12:32:25,370 - master_log - 
+[INFO] - 2020-11-23 11:13:35,419 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-11-23 11:14:35,485 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-11-23 11:14:35,486 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-11-23 11:15:35,554 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-11-23 11:15:35,555 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-11-23 11:16:35,623 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-11-23 11:16:35,624 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-11-23 11:17:35,691 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-11-23 11:17:35,692 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-11-23 11:18:35,758 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-11-23 11:18:35,759 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-11-23 11:19:35,826 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-11-23 11:19:35,827 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-11-23 11:20:35,896 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-11-23 11:20:35,897 - master_log - 
 [*] [mqtt_master_cli] [16] [Received PINGRESP]
 
