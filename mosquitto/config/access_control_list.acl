@@ -1,15 +1,17 @@
 user miagiContr
 topic write quest/auth
 topic read quest/+/authCheck
-topic readwrite quest/+/modeIn/#
+topic readwrite quest/+/modeIn
 topic write quest/+/healthCheck
 
 user miagiCom
 topic read quest/auth
 topic write quest/+/authCheck
+topic write quest/+/modeIn
+topic read ui/quest/+/modeIn
+topic read quest/+/healthCheck
+topic write ui/quest/+/healthCheck
 
 user miagiUI
-topic read quest/auth
-topic read quest/+/authCheck
-topic write quest/+/modeIn/#
-topic read quest/+/healthCheck
+topic write ui/quest/+/modeIn
+topic read ui/quest/+/healthCheck

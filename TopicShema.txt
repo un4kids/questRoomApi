@@ -15,11 +15,13 @@ mqtt_master_cli - MAC:
   ----------------------------------------------------
   --> sub      --> quest/auth
   --> pub      --> quest/authCheck
+  --> pub      --> quest/+/modeIn
+  --> sub      --> ui/quest/+/modeIn
+  --> sub      --> quest/+/healthCheck
+  --> pub      --> ui/quest/+/healthCheck
 
 ui_cli - MAC:
   /  action    /  topic  /                             /
   ----------------------------------------------------
-  -->  sub     --> quest/auth
-  -->  sub     --> quest/authCheck
-  -->  pub     --> quest/+/modeIn/#
+  -->  pub     --> quest/+/modeIn
   -->  sub     --> quest/+/healthCheck

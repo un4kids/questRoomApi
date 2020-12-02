@@ -7,6 +7,9 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 from http_requests.requestss import ApiRequests as api_req
 from .logger import reg_logger
+from .mqtt_web_cli import MqttCtrlWebClient
+
+web_cli = MqttCtrlWebClient
 
 
 class MqttMasterClient(object):
@@ -20,6 +23,8 @@ class MqttMasterClient(object):
 
         self.quest_auth = os.environ.get("QUEST_AUTH_TOPIC")
         self.quest_authCheck = os.environ.get("QUEST_AUTH_CHECK_TOPIC")
+        self.quest_healthcheck = os.environ.get("QUEST_HEALTH_CHECK_TOPIC")
+        self.quest_modeIn = os.environ.get("QUEST_MODE_IN")
 
         self.connect = False
         self.kill = False
@@ -31,8 +36,13 @@ class MqttMasterClient(object):
         self.connect = True
         if self.listener:
             self.mqttc.subscribe(self.quest_auth)
+            self.mqttc.subscribe(self.quest_healthcheck.format('+'))
+
             self.mqttc.message_callback_add(self.quest_auth,
                                             self.on_message_from_quest_auth)
+            self.mqttc.message_callback_add(self.quest_healthcheck.format('+'),
+                                            self.on_message_from_quest_healthcheck)
+        self.web_client = web_cli(self.mqttc, self.logger).bootstrap()
 
     # ***                              CALLBACKS                               ***
     def on_message(self, client, userdata, msg):
@@ -41,7 +51,7 @@ class MqttMasterClient(object):
                                                                  msg.payload))
 
     def on_message_from_quest_auth(self, client, userdata, msg):
-        """ Function handling new quest registration
+        """ calback handling new quest registration
                 - create quest object in API
         """
         quest_data = json.loads(msg.payload.decode())
@@ -60,6 +70,10 @@ class MqttMasterClient(object):
         self.logger.info("\n[*] [API] [{0}] [{1}] [{2}]\n".format(new_quest.request.method,
                                                                   new_quest.url,
                                                                   new_quest.status_code))
+
+    def on_message_from_quest_healthcheck(self, client, userdata, msg):
+        """ callback handling controllers healthCheck messages (send to UI over websocket) """
+        self._mqttPubMsg(self.web_client, 'ui/' + msg.topic, json.dumps(msg))
 
     # ***                               UTILS                                ***
     def on_log(self, client, userdata, level, buf):
@@ -94,6 +108,8 @@ class MqttMasterClient(object):
         while not self.kill:
             self.mqttc.loop()
         else:
+            self.web_client.disconnect()
+            self.web_client.loop_stop()
             self.mqttc.disconnect()
             self.mqttc.loop_stop()
 

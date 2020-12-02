@@ -1,0 +1,6 @@
+__pycache__
+mqtt_master/mqtt_services/__pycache__
+questRoomSrv_api/app/services/quests/__pycache__
+mqtt_master/mqtt_services/__pycache__
+*.pyc
+*.log
