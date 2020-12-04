@@ -1,5 +1,6 @@
 import paho.mqtt.client as paho
 import logging
+import json
 logging.basicConfig(level=logging.INFO)
 
 
@@ -48,7 +49,7 @@ class MqttClientPub(object):
 
 # Example of usage
 # Change values in need
-condition = "Some Info"
+condition = {'chek': "Some Info"}
 mac = "MAC7ELEVEN"
 MqttClientPub(topic="quest/{}/healthCheck".format(mac),
-              broker_url="localhost", broker_port=1883, data=condition).bootstrap_mqtt().start()
+              broker_url="localhost", broker_port=1883, data=json.dumps(condition)).bootstrap_mqtt().start()

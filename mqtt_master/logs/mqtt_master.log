@@ -1,64 +1,160 @@
 
-[INFO] - 2020-12-02 15:12:39,629 - master_log - 
+[INFO] - 2020-12-04 08:05:40,741 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending CONNECT (u1, p1, wr0, wq0, wf0, c1, k60) client_id=b'mqtt_master_cli']
 
 
-[INFO] - 2020-12-02 15:12:39,630 - master_log - 
+[INFO] - 2020-12-04 08:05:40,741 - master_log - 
 [*] [Query listeners are Up!]
 
 
-[INFO] - 2020-12-02 15:12:39,630 - master_log - 
+[INFO] - 2020-12-04 08:05:40,742 - master_log - 
 [*] [mqtt_master_cli] [16] [Received CONNACK (0, 0)]
 
 
-[INFO] - 2020-12-02 15:12:39,630 - master_log - 
+[INFO] - 2020-12-04 08:05:40,742 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending SUBSCRIBE (d0, m1) [(b'quest/auth', 0)]]
 
 
-[INFO] - 2020-12-02 15:12:39,631 - master_log - 
+[INFO] - 2020-12-04 08:05:40,742 - master_log - 
 [*] [mqtt_master_cli] [16] [Sending SUBSCRIBE (d0, m2) [(b'quest/+/healthCheck', 0)]]
 
 
-[INFO] - 2020-12-02 15:12:39,832 - master_log - 
+[INFO] - 2020-12-04 08:05:40,943 - master_log - 
 [*] [web_cli] [16] [Sending CONNECT (u1, p1, wr0, wq0, wf0, c0, k60) client_id=b'web_cli']
 
 
-[INFO] - 2020-12-02 15:12:39,833 - master_log - 
+[INFO] - 2020-12-04 08:05:40,944 - master_log - 
 [*] [mqtt_master_cli] [16] [Received SUBACK]
 
 
-[INFO] - 2020-12-02 15:12:39,833 - master_log - 
-[*] [web_cli] [16] [Received CONNACK (0, 0)]
+[INFO] - 2020-12-04 08:05:40,945 - master_log - 
+[*] [web_cli] [16] [Received CONNACK (1, 0)]
 
 
-[INFO] - 2020-12-02 15:12:39,833 - master_log - 
-[*] [mqtt_master_cli] [16] [Received SUBACK]
-
-
-[INFO] - 2020-12-02 15:12:39,833 - master_log - 
+[INFO] - 2020-12-04 08:05:40,945 - master_log - 
 [*] [web_cli] [16] [Sending SUBSCRIBE (d0, m1) [(b'ui/quest/+/modeIn', 0)]]
 
 
-[INFO] - 2020-12-02 15:12:39,834 - master_log - 
+[INFO] - 2020-12-04 08:05:40,945 - master_log - 
+[*] [mqtt_master_cli] [16] [Received SUBACK]
+
+
+[INFO] - 2020-12-04 08:05:40,946 - master_log - 
 [*] [web_cli] [16] [Received SUBACK]
 
 
-[INFO] - 2020-12-02 15:12:39,630 - master_log - 
-[*] [DISCONNECT] [mqtt_master_cli]
+[INFO] - 2020-12-04 08:05:46,779 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PUBLISH (d0, q0, r0, m0), 'quest/MAC7ELEVEN/healthCheck', ...  (9 bytes)]
 
 
-[INFO] - 2020-12-02 15:12:39,630 - master_log - 
-[*] [web_cli] [16] [Sending DISCONNECT]
+[INFO] - 2020-12-04 08:05:48,781 - master_log - 
+[*] [web_cli] [16] [Sending PUBLISH (d0, q1, r0, m2), 'b'ui/quest/MAC7ELEVEN/healthCheck'', ... (9 bytes)]
 
 
-[INFO] - 2020-12-02 15:12:39,631 - master_log - 
-[*] [web_cli] [16] [Sending UNSUBSCRIBE (d0, m2) [b'ui/quest/+/modeIn']]
+[INFO] - 2020-12-04 08:05:48,783 - master_log - 
+[*] [web_cli] [16] [Received PUBACK (Mid: 2)]
 
 
-[INFO] - 2020-12-02 15:12:39,631 - master_log - 
-[*] [web_cli] [16] [Sending DISCONNECT]
+[INFO] - 2020-12-04 08:06:41,842 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
 
 
-[INFO] - 2020-12-02 15:12:39,631 - master_log - 
-[*] [DISCONNECT] [web_cli]
+[INFO] - 2020-12-04 08:06:41,843 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-12-04 08:06:48,850 - master_log - 
+[*] [web_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-12-04 08:06:48,851 - master_log - 
+[*] [web_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-12-04 08:07:34,182 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PUBLISH (d0, q0, r0, m0), 'quest/MAC7ELEVEN/healthCheck', ...  (9 bytes)]
+
+
+[INFO] - 2020-12-04 08:07:36,184 - master_log - 
+[*] [web_cli] [16] [Sending PUBLISH (d0, q1, r0, m3), 'b'ui/quest/MAC7ELEVEN/healthCheck'', ... (9 bytes)]
+
+
+[INFO] - 2020-12-04 08:07:36,186 - master_log - 
+[*] [web_cli] [16] [Received PUBACK (Mid: 3)]
+
+
+[INFO] - 2020-12-04 08:07:42,192 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-12-04 08:07:42,194 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-12-04 08:08:36,253 - master_log - 
+[*] [web_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-12-04 08:08:36,254 - master_log - 
+[*] [web_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-12-04 08:08:42,259 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-12-04 08:08:42,260 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-12-04 08:09:36,320 - master_log - 
+[*] [web_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-12-04 08:09:36,321 - master_log - 
+[*] [web_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-12-04 08:09:42,327 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-12-04 08:09:42,328 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-12-04 08:10:36,386 - master_log - 
+[*] [web_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-12-04 08:10:36,387 - master_log - 
+[*] [web_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-12-04 08:10:42,392 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-12-04 08:10:42,393 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
+
+
+[INFO] - 2020-12-04 08:11:18,975 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PUBLISH (d0, q0, r0, m0), 'quest/MAC7ELEVEN/healthCheck', ...  (21 bytes)]
+
+
+[INFO] - 2020-12-04 08:11:20,977 - master_log - 
+[*] [web_cli] [16] [Sending PUBLISH (d0, q1, r0, m4), 'b'ui/quest/MAC7ELEVEN/healthCheck'', ... (21 bytes)]
+
+
+[INFO] - 2020-12-04 08:11:20,978 - master_log - 
+[*] [web_cli] [16] [Received PUBACK (Mid: 4)]
+
+
+[INFO] - 2020-12-04 08:11:43,001 - master_log - 
+[*] [mqtt_master_cli] [16] [Sending PINGREQ]
+
+
+[INFO] - 2020-12-04 08:11:43,002 - master_log - 
+[*] [mqtt_master_cli] [16] [Received PINGRESP]
 

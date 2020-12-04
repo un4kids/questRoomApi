@@ -73,7 +73,7 @@ class MqttMasterClient(object):
 
     def on_message_from_quest_healthcheck(self, client, userdata, msg):
         """ callback handling controllers healthCheck messages (send to UI over websocket) """
-        self._mqttPubMsg(self.web_client, 'ui/' + msg.topic, json.dumps(msg))
+        self._mqttPubMsg(self.web_client, 'ui/' + msg.topic, msg.payload)
 
     # ***                               UTILS                                ***
     def on_log(self, client, userdata, level, buf):
