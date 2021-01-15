@@ -14,6 +14,7 @@ class MqttCtrlWebClient(object):
 
         self.broker_url = os.environ.get("BROKER_HOST")
         self.broker_webs_port = int(os.environ.get("BROKER_WEBSOCKET_PORT"))
+        self.broker_port = int(os.environ.get("BROKER_PORT"))
 
         self.kill = False
         self.connect = False
@@ -26,8 +27,44 @@ class MqttCtrlWebClient(object):
         client.message_callback_add("ui/" + self.quest_modeIn.format("+"),
                                     self.on_message_ui_mode_in)
 
+
+    def on_publish_test(self, client, userdata, result):
+        self.logger.info(result)
+
     def on_message_ui_mode_in(self, client, userdata, msg):
-        self._mqttPubMsg(self.mqtt_mstr, msg.topic[3:], msg.payload.decode())
+        self.logger.info("---------------_>Master Poster")
+        
+        master_poster = paho.Client("master_poster", protocol=paho.MQTTv311)
+        master_poster.on_publish = self.on_publish_test
+
+        master_poster.username_pw_set(username="miagiCom", password="2")
+
+        result_of_connection = master_poster.connect(self.broker_url, self.broker_port)
+
+        if result_of_connection == 0:
+            connectTest = True
+        if connectTest:
+
+            master_poster.publish(msg.topic[3:], msg.payload.decode(), qos=0)
+            sleep(2)
+        else:
+            self.logger.info("---------------_>Master Poster Feil")
+
+        master_poster.disconnect()
+        
+
+        # try:
+        #     msg = self.mqtt_mstr.publish(msg.topic[3:], msg.payload.decode(), qos=2)
+        #     self.logger(msg)
+
+        # except Exception as e:
+        #     self.logger.info("---------------_>THE RISE")
+        #     self.logger.info(e)
+        #     raise e
+         
+        # self.logger.info(msg.topic[3:])
+        # self._mqttPubMsg(self.mqtt_mstr, msg.topic[3:], msg.payload.decode())
+        # self.logger.info("---------------_> ON MESSAGE UI MODE IN")
 
     def on_message(self, client, userdata, msg):
         self.logger.info("\n[???] [{0}], [{1}] - [{2}]\n".format(client._client_id, msg.topic, msg.payload))
@@ -50,7 +87,7 @@ class MqttCtrlWebClient(object):
 
     # ***                            CLIENT CONFIGS                            ***
     def bootstrap(self):
-        mqtt_websocket_cli = paho.Client(client_id="web_cli", clean_session=False,
+        mqtt_websocket_cli = paho.Client(client_id="web_cli", clean_session=True,
                                          protocol=paho.MQTTv311, transport='websockets')
         self._broker_auth(mqtt_websocket_cli)
         mqtt_websocket_cli.on_connect = self.on_connect
@@ -66,7 +103,7 @@ class MqttCtrlWebClient(object):
         while True:
             sleep(2)
             try:
-                client.publish(topic, data, qos=1)
+                client.publish(topic, data, qos=2)
                 break
             except Exception as e:
                 raise e
