@@ -17,3 +17,9 @@ topic readwrite quest/+/modeIn
 topic readwrite quest/+/healthCheck
 topic readwrite ui/quest/+/modeIn
 topic readwrite ui/quest/+/healthCheck
+
+user miagiWebPoster
+topic readwrite quest/+/modeIn
+topic readwrite quest/+/healthCheck
+topic readwrite ui/quest/+/modeIn
+topic readwrite ui/quest/+/healthCheck

@@ -1,4 +1,5 @@
 from .mqtt_web_cli import MqttCtrlWebClient
+from .web_poster_cli import WebPosterMqttCli
 from .logger import reg_logger
 from http_requests.requestss import ApiRequests as api_req
 import paho.mqtt.client as paho
@@ -10,7 +11,7 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 web_cli = MqttCtrlWebClient
-
+web_poster = WebPosterMqttCli
 
 class MqttMasterClient(object):
     def __init__(self, listener=False):
@@ -43,6 +44,7 @@ class MqttMasterClient(object):
             self.mqttc.message_callback_add(self.quest_healthcheck.format('+'),
                                             self.on_message_from_quest_healthcheck)
         self.web_client = web_cli(client, self.logger).bootstrap()
+        self.web_poster_cli = web_poster(self.logger).bootstrap()
 
     # ***                              CALLBACKS                               ***
     def on_message(self, client, userdata, msg):
@@ -71,35 +73,36 @@ class MqttMasterClient(object):
         self.logger.info("\n[*] [API] [{0}] [{1}] [{2}]\n".format(new_quest.request.method,
                                                                   new_quest.url,
                                                                   new_quest.status_code))
-    
+
     def on_publish_test(self, client, userdata, result):
         self.logger.info(result)
-    
+
     def on_message_from_quest_healthcheck(self, client, userdata, msg):
         """ callback handling controllers healthCheck messages (send to UI over websocket) """
         # self._mqttPubMsg(self.web_client, 'ui/' + msg.topic, msg.payload)
         """ callback handling controllers healthCheck messages (send to UI over websocket) """
-        self.logger.info(msg.payload)
-        web_poster = paho.Client(client_id="web_poster", clean_session=True,
-            protocol=paho.MQTTv311, transport='websockets')
-        web_poster.on_publish = self.on_publish_test
-        web_poster.username_pw_set(username="miagiUI", password="2")
-        result_of_connection = web_poster.connect(self.broker_url, 9001)
-        connect_test = False
-        if result_of_connection == 0:
-            self.logger.info("connected")
-            connect_test = True
-            # web_poster.loop_start()
-        if connect_test:
-            self.logger.info('ui/' + msg.topic)
-            web_poster.publish('ui/' + msg.topic, msg.payload, qos=0)
-            sleep(2)
-            self.logger.info("posted")
-        else:
-            self.logger.info("Feil")
-            
-
-        web_poster.disconnect()
+        # self.logger.info(msg.payload)
+        # web_poster = paho.Client(client_id="web_poster", clean_session=True,
+        #     protocol=paho.MQTTv311, transport='websockets')
+        # web_poster.on_publish = self.on_publish_test
+        # web_poster.username_pw_set(username="miagiUI", password="2")
+        # result_of_connection = web_poster.connect(self.broker_url, 9001)
+        # connect_test = False
+        # if result_of_connection == 0:
+        #     self.logger.info("connected")
+        #     connect_test = True
+        #     # web_poster.loop_start()
+        # if connect_test:
+        #     self.logger.info('ui/' + msg.topic)
+        #     web_poster.publish('ui/' + msg.topic, msg.payload, qos=0)
+        #     sleep(2)
+        #     self.logger.info("posted")
+        # else:
+        #     self.logger.info("Feil")
+        #
+        #
+        # web_poster.disconnect()
+        self.web_poster_cli.publish('ui/' + msg.topic, msg.payload, qos=0)
 
     # ***                               UTILS                                ***
     def on_log(self, client, userdata, level, buf):
@@ -140,6 +143,8 @@ class MqttMasterClient(object):
         else:
             self.web_client.disconnect()
             self.web_client.loop_stop()
+            self.web_poster.disconnect()
+            self.web_poster.loop_stop()
             self.mqttc.disconnect()
             self.mqttc.loop_stop()
 
