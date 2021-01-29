@@ -1,6 +1,7 @@
 import sys
 import os
 import logging
+from logging.handlers import RotatingFileHandler
 import subprocess
 import getpass
 import string
@@ -41,7 +42,8 @@ class GrowAutomationsStartUp(object):
             ch.setLevel(logging.DEBUG)
 
             os.makedirs(os.path.dirname("./logs/startup.log"), exist_ok=True)
-            log_reg = logging.FileHandler('./logs/startup.log', mode="w", encoding=None, delay=False)
+            log_reg = RotatingFileHandler('./logs/startup.log', mode='a', maxBytes=5*1024*1024,
+                                backupCount=2, encoding=None, delay=0)
             log_reg.setLevel(logging.DEBUG)
 
             # create formatter for logger output

@@ -48,7 +48,7 @@
 
 ## Usage
 1. View :
-    - `tests/ctrl_mqtt_msgs_tests`(implement controller funcs)
+    - `tests/ctrl_mqtt_msgs_tests`(implemented controller funcs)
     - `tests/insomnia.json`(exported insomnia requests)
     - `TopicShema.txt`(user - topic rules)
 

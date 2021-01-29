@@ -1,6 +1,6 @@
 import os
 import logging
-
+from logging.handlers import RotatingFileHandler
 
 def reg_logger():
     # create logger
@@ -13,7 +13,8 @@ def reg_logger():
 
     # create handler to write error logs in file
     os.makedirs(os.path.dirname('./logs/mqtt_master.log'), exist_ok=True)
-    log_reg = logging.FileHandler('./logs/mqtt_master.log', mode="w", encoding=None, delay=False)
+    log_reg = RotatingFileHandler('./logs/mqtt_master.log', mode='a', maxBytes=5*1024*1024,
+                        backupCount=2, encoding=None, delay=0)
     log_reg.setLevel(logging.DEBUG)
 
     # create formatter for logger output
